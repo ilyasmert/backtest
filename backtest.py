@@ -6,17 +6,14 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
     cerebro = bt.Cerebro()
     cerebro.broker.setcash(1_000_000.0)
 
-    # Add our strategy
     cerebro.addstrategy(SMACrossover)
 
-    # Create data feed
     data = bt.feeds.GenericCSVData(
         dataname=csvfile,
         dtformat=dtformat,
         datetime=0,
         timeframe=bt.TimeFrame.Minutes,
-        period = bt.TimeFrame.Ticks,
-        compression = 1,
+        compression=1,
         time=-1,
         open=1,
         high=2,
@@ -24,10 +21,7 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
         close=4,
         volume=5,
         openinterest=-1,
-        # If your CSV has no header row, specify:
-        header=0,
-        # fromdate=datetime.datetime(2025, 1, 1),
-        # todate=datetime.datetime(2025, 1, 31),
+        header=0
     )
 
     cerebro.adddata(data)
@@ -36,7 +30,6 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
     cerebro.run()
     print("Final Portfolio Value:", cerebro.broker.getvalue())
 
-    # Optionally plot
     cerebro.plot()
 
 if __name__ == '__main__':
