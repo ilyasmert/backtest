@@ -1,5 +1,4 @@
 import backtrader as bt
-import datetime
 import argparse
 from strategies import HedgeSMACrossoverModified
 
@@ -12,8 +11,6 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
         dataname=csvfile,
         dtformat=dtformat,
         datetime=0,
-        fromdate=datetime.datetime(2025, 1, 28),
-        todate=datetime.datetime(2025, 3, 2),
         timeframe=bt.TimeFrame.Minutes,
         compression=1,
         time=-1,
@@ -46,7 +43,7 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
 
     cerebro.adddata(data_long)
     cerebro.adddata(data_short)
-    
+
     print("Starting Portfolio Value:", cerebro.broker.getvalue())
     cerebro.run()
     print("Final Portfolio Value:", cerebro.broker.getvalue())
@@ -54,6 +51,6 @@ def run_backtest(csvfile, dtformat='%Y.%m.%d %H:%M'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', required=True, help='resampled_data.csv')
+    parser.add_argument('--data', required=True)
     args = parser.parse_args()
     run_backtest(args.data)

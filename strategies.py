@@ -12,14 +12,14 @@ class HedgeSMACrossoverModified(bt.Strategy):
 
     def __init__(self):
         # Long feed: datas[0]
-        self.sma_long_fast = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.p.fast_period, plot=False)
-        self.sma_long_slow = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.p.slow_period, plot=False)
-        self.crossover_long = bt.indicators.CrossOver(self.sma_long_fast, self.sma_long_slow, plot=False)
+        self.sma_long_fast = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.p.fast_period, plot=True)
+        self.sma_long_slow = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.p.slow_period, plot=True)
+        self.crossover_long = bt.indicators.CrossOver(self.sma_long_fast, self.sma_long_slow, plot=True)
 
         # Short feed: datas[1]
-        self.sma_short_fast = bt.indicators.SimpleMovingAverage(self.datas[1], period=self.p.fast_period, plot=False)
-        self.sma_short_slow = bt.indicators.SimpleMovingAverage(self.datas[1], period=self.p.slow_period, plot=False)
-        self.crossover_short = bt.indicators.CrossOver(self.sma_short_fast, self.sma_short_slow, plot=False)
+        self.sma_short_fast = bt.indicators.SimpleMovingAverage(self.datas[1], period=self.p.fast_period, plot=True)
+        self.sma_short_slow = bt.indicators.SimpleMovingAverage(self.datas[1], period=self.p.slow_period, plot=True)
+        self.crossover_short = bt.indicators.CrossOver(self.sma_short_fast, self.sma_short_slow, plot=True)
 
         # We'll store entry prices for each side:
         self.long_entry_price = None
@@ -33,8 +33,8 @@ class HedgeSMACrossoverModified(bt.Strategy):
             print(f"{dt}: Order Rejected/Margin/Canceled on {order.data._name}")
 
     def next(self):
-        print(f"LongFeed time: {self.datas[0].datetime.datetime(0)} | "
-          f"ShortFeed time: {self.datas[1].datetime.datetime(0)}")
+        #print(f"LongFeed time: {self.datas[0].datetime.datetime(0)} | "
+         # f"ShortFeed time: {self.datas[1].datetime.datetime(0)}")
         long_data = self.datas[0]
         pos_long = self.getposition(long_data).size
         price_long = long_data.close[0]
